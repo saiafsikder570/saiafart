@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Omar Saif - Creative Designer & Editor</title>
+    
+    <!-- ফন্টস (ডেমো থিমের মতো Syne এবং Manrope) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;600&family=Syne:wght@400;700;800&display=swap" rel="stylesheet">
+    
+    <!-- আইকন ও এনিমেশন লাইব্রেরি -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glightbox/dist/css/glightbox.min.css" />
+
+    <style>
+        /* --- PREMIUM THEME SETTINGS --- */
+        :root {
+            --bg-color: #0b0b0b;
+            --card-bg: #161616;
+            --text-main: #ffffff;
+            --text-gray: #a1a1a1;
+            --accent: #ccff00; /* সেই লাইম গ্রিন কালার */
+            --border: #2a2a2a;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: 'Manrope', sans-serif;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        h1, h2, h3, h4 { font-family: 'Syne', sans-serif; font-weight: 700; text-transform: uppercase; }
+        
+        /* --- CUSTOM SCROLLBAR --- */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--bg-color); }
+        ::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 10px; }
+
+        /* --- HEADER & NAV --- */
+        header {
+            position: fixed; top: 0; left: 0; width: 100%;
+            padding: 20px 5%;
+            display: flex; justify-content: space-between; align-items: center;
+            z-index: 1000;
+            background: rgba(11, 11, 11, 0.85);
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid var(--border);
+        }
+        .logo { font-size: 28px; font-weight: 800; color: var(--text-main); letter-spacing: -1px; }
+        .logo span { color: var(--accent); }
+        
+        .nav-links a { margin-left: 30px; font-size: 14px; color: var(--text-main); text-decoration: none; font-weight: 600; text-transform: uppercase; transition: 0.3s; }
+        .nav-links a:hover { color: var(--accent); }
+        .hire-btn { background: var(--accent); color: #000; padding: 12px 30px; border-radius: 50px; font-weight: 700; text-decoration: none; display: inline-block; transition: 0.3s; }
+        .hire-btn:hover { background: #fff; transform: translateY(-3px); }
+
+        /* --- HERO SECTION --- */
+        .hero {
+            min-height: 100vh;
+            display: flex; align-items: center;
+            padding: 100px 5% 50px;
+            position: relative;
+        }
+        .hero-content { flex: 1; z-index: 2; }
+        .hero-content h5 { color: var(--accent); letter-spacing: 2px; margin-bottom: 20px; font-weight: 600; }
+        .hero-content h1 {
+            font-size: clamp(40px, 6vw, 90px);
+            line-height: 1.1; margin-bottom: 30px;
+        }
+        .hero-content p { color: var(--text-gray); font-size: 18px; max-width: 500px; margin-bottom: 40px; line-height: 1.6; }
+        
+        .hero-img { flex: 1; text-align: right; position: relative; }
+        .hero-img img {
+            width: 80%; border-radius: 20px;
+            box-shadow: 0 0 50px rgba(204, 255, 0, 0.1);
+            filter: grayscale(100%); transition: 0.5s;
+        }
+        .hero-img img:hover { filter: grayscale(0%); }
+
+        /* --- MARQUEE (SCROLLING TEXT) --- */
+        .marquee-container {
+            background: var(--accent);
+            padding: 20px 0;
+            overflow: hidden;
+            white-space: nowrap;
+            transform: rotate(-2deg) scale(1.05);
+            margin: 50px 0;
+        }
+        .marquee-content { display: inline-block; animation: scroll 20s linear infinite; }
+        .marquee-content span {
+            font-family: 'Syne', sans-serif; font-size: 40px; font-weight: 800; color: #000;
+            text-transform: uppercase; margin: 0 40px;
+        }
+        @keyframes scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+        /* --- PORTFOLIO SECTIONS --- */
+        .section { padding: 80px 5%; }
+        .sec-header { margin-bottom: 60px; display: flex; justify-content: space-between; align-items: end; border-bottom: 1px solid var(--border); padding-bottom: 20px; }
+        .sec-title h2 { font-size: 50px; margin-bottom: 10px; }
+        .sec-title span { color: var(--accent); font-size: 16px; letter-spacing: 2px; }
+
+        /* GRID LAYOUT */
+        .grid-gallery {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 30px;
+        }
+        .item-card {
+            background: var(--card-bg);
+            border-radius: 15px; overflow: hidden;
+            transition: 0.4s; border: 1px solid #222;
+        }
+        .item-card:hover { transform: translateY(-10px); border-color: var(--accent); }
+        
+        .card-thumb { height: 280px; overflow: hidden; position: relative; }
+        .card-thumb img { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; }
+        .item-card:hover .card-thumb img { transform: scale(1.1); }
+        
+        .play-overlay {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.4); display: flex; align-items: center; justify-content: center;
+            opacity: 0; transition: 0.3s;
+        }
+        .item-card:hover .play-overlay { opacity: 1; }
+        .play-btn {
+            width: 60px; height: 60px; background: var(--accent); border-radius: 50%;
+            display: flex; align-items: center; justify-content: center; color: #000; font-size: 20px;
+        }
+
+        .card-info { padding: 25px; }
+        .card-info h3 { font-size: 24px; margin-bottom: 10px; }
+        .card-info p { color: var(--text-gray); font-size: 14px; }
+
+        /* --- CONTACT & FOOTER --- */
+        .contact-sec { background: var(--card-bg); padding: 80px 5%; margin-top: 50px; border-top: 1px solid var(--border); }
+        .contact-grid { display: grid; grid-template-columns: 1fr 1.5fr; gap: 50px; }
+        
+        .contact-info-box h4 { color: var(--accent); margin-bottom: 20px; }
+        .info-item { margin-bottom: 30px; }
+        .info-item i { color: var(--accent); margin-right: 10px; }
+        .info-item span { font-size: 20px; font-weight: 600; display: block; margin-top: 5px; }
+
+        form input, form textarea {
+            width: 100%; background: #0b0b0b; border: 1px solid var(--border);
+            padding: 15px; color: #fff; margin-bottom: 20px; border-radius: 5px; font-family: 'Manrope';
+        }
+        form input:focus, form textarea:focus { outline: none; border-color: var(--accent); }
+        
+        footer { padding: 40px 5%; text-align: center; border-top: 1px solid var(--border); font-size: 14px; color: var(--text-gray); }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .hero { flex-direction: column-reverse; padding-top: 120px; text-align: center; }
+            .hero-img { margin-bottom: 40px; }
+            .hero-content h1 { font-size: 45px; }
+            .contact-grid { grid-template-columns: 1fr; }
+            .sec-header { flex-direction: column; align-items: flex-start; }
+            .nav-links { display: none; } /* মোবাইলে মেনু সিম্পল রাখার জন্য */
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <div class="logo">OMAR<span>.</span></div>
+        <nav class="nav-links">
+            <a href="#home">Home</a>
+            <a href="#graphic">Graphic Design</a>
+            <a href="#video">Video Editing</a>
+            <a href="#contact">Contact</a>
+        </nav>
+        <a href="tel:+8801XXXXXXXXX" class="hire-btn">Let's Talk</a>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content" data-aos="fade-right">
+            <h5>HELLO, I AM OMAR SAIF</h5>
+            <h1>BRINGING YOUR<br>IDEAS TO <span>LIFE</span></h1>
+            <p>Professional Graphic Designer & Video Editor based in Dhaka, Bangladesh. I transform concepts into stunning visuals.</p>
+            <div class="hero-btns">
+                <a href="#graphic" class="hire-btn">View My Work</a>
+            </div>
+        </div>
+        <div class="hero-img" data-aos="fade-left">
+            <!-- তোমার নিজের ছবি এখানে দেবে -->
+            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=800&auto=format&fit=crop" alt="Omar Saif">
+        </div>
+    </section>
+
+    <!-- Scrolling Marquee (Demo-র মত) -->
+    <div class="marquee-container">
+        <div class="marquee-content">
+            <span>Graphic Design * Video Editing * Brand Identity * Motion Graphics * UI/UX Design * Graphic Design * Video Editing *</span>
+        </div>
+    </div>
+
+    <!-- Graphic Design Portfolio -->
+    <section class="section" id="graphic">
+        <div class="sec-header" data-aos="fade-up">
+            <div class="sec-title">
+                <span>PORTFOLIO</span>
+                <h2>Selected <span>Designs</span></h2>
+            </div>
+            <p style="color:var(--text-gray);">All Graphic Works</p>
+        </div>
+
+        <div class="grid-gallery">
+            <!-- Design Item 1 -->
+            <div class="item-card" data-aos="fade-up">
+                <div class="card-thumb">
+                    <!-- ইমেজ লিংক চেঞ্জ করবে -->
+                    <img src="https://images.unsplash.com/photo-1626785774573-4b799312c95d?q=80&w=600" alt="Design">
+                </div>
+                <div class="card-info">
+                    <h3>Social Media Kit</h3>
+                    <p>Branding / Social Media</p>
+                </div>
+            </div>
+
+            <!-- Design Item 2 -->
+            <div class="item-card" data-aos="fade-up" data-aos-delay="100">
+                <div class="card-thumb">
+                    <img src="https://images.unsplash.com/photo-1561070791-2526d30994b5?q=80&w=600" alt="Design">
+                </div>
+                <div class="card-info">
+                    <h3>Premium Logo Design</h3>
+                    <p>Identity / Vector</p>
+                </div>
+            </div>
+
+            <!-- Design Item 3 -->
+            <div class="item-card" data-aos="fade-up" data-aos-delay="200">
+                <div class="card-thumb">
+                    <img src="https://images.unsplash.com/photo-1600607686527-6fb886090705?q=80&w=600" alt="Design">
+                </div>
+                <div class="card-info">
+                    <h3>Product Packaging</h3>
+                    <p>Print Design</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Video Editing Portfolio -->
+    <section class="section" id="video">
+        <div class="sec-header" data-aos="fade-up">
+            <div class="sec-title">
+                <span>SHOWREEL</span>
+                <h2>Video <span>Projects</span></h2>
+            </div>
+            <p style="color:var(--text-gray);">Motion & Editing</p>
+        </div>
+
+        <div class="grid-gallery">
+            <!-- Video 1 -->
+            <a href="https://www.youtube.com/watch?v=Ga6RYejo6Hk" class="glightbox item-card" data-aos="zoom-in">
+                <div class="card-thumb">
+                    <!-- ভিডিও থাম্বনেইল -->
+                    <img src="https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?q=80&w=600" alt="Video">
+                    <div class="play-overlay"><div class="play-btn"><i class="fa-solid fa-play"></i></div></div>
+                </div>
+                <div class="card-info">
+                    <h3>Cinematic Travel Vlog</h3>
+                    <p>Color Grading / Editing</p>
+                </div>
+            </a>
+
+            <!-- Video 2 -->
+            <a href="https://www.youtube.com/watch?v=LXb3EKWsInQ" class="glightbox item-card" data-aos="zoom-in" data-aos-delay="100">
+                <div class="card-thumb">
+                    <img src="https://images.unsplash.com/photo-1518135714426-c18f5ffb6f4d?q=80&w=600" alt="Video">
+                    <div class="play-overlay"><div class="play-btn"><i class="fa-solid fa-play"></i></div></div>
+                </div>
+                <div class="card-info">
+                    <h3>Commercial Ad</h3>
+                    <p>Motion Graphics</p>
+                </div>
+            </a>
+
+            <!-- Video 3 -->
+            <a href="https://www.youtube.com/watch?v=ScMzIvxBSi4" class="glightbox item-card" data-aos="zoom-in" data-aos-delay="200">
+                <div class="card-thumb">
+                    <img src="https://images.unsplash.com/photo-1574717432707-c67805686729?q=80&w=600" alt="Video">
+                    <div class="play-overlay"><div class="play-btn"><i class="fa-solid fa-play"></i></div></div>
+                </div>
+                <div class="card-info">
+                    <h3>Corporate Interview</h3>
+                    <p>Post Production</p>
+                </div>
+            </a>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact-sec" id="contact">
+        <div class="contact-grid">
+            <div class="contact-info-box" data-aos="fade-right">
+                <h2>LET'S WORK <br><span>TOGETHER</span></h2>
+                <p style="color:var(--text-gray); margin: 20px 0;">Have a project in mind? Let's discuss how I can help your brand grow.</p>
+                
+                <div class="info-item">
+                    <p>Location</p>
+                    <span>Rayerbag, Dhaka, Bangladesh</span>
+                </div>
+                <div class="info-item">
+                    <p>Phone</p>
+                    <span>+880 1XXX-XXXXXX</span>
+                </div>
+                <div class="info-item">
+                    <p>Email</p>
+                    <span>omar.saif@example.com</span>
+                </div>
+            </div>
+
+            <div class="contact-form" data-aos="fade-left">
+                <form action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+                    <input type="text" name="name" placeholder="Your Name" required>
+                    <input type="email" name="email" placeholder="Your Email" required>
+                    <textarea name="message" rows="5" placeholder="Tell me about your project..."></textarea>
+                    <button type="submit" class="hire-btn" style="border:none; cursor:pointer; width:100%;">Send Message</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="social-links" style="margin-bottom: 20px;">
+            <a href="#" style="color:#fff; margin:0 15px; font-size:20px;"><i class="fa-brands fa-facebook"></i></a>
+            <a href="#" style="color:#fff; margin:0 15px; font-size:20px;"><i class="fa-brands fa-linkedin"></i></a>
+            <a href="#" style="color:#fff; margin:0 15px; font-size:20px;"><i class="fa-brands fa-behance"></i></a>
+            <a href="#" style="color:#fff; margin:0 15px; font-size:20px;"><i class="fa-brands fa-instagram"></i></a>
+        </div>
+        <p>&copy; 2025 Omar Saif. All Rights Reserved.</p>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/mcstudios/glightbox/dist/js/glightbox.min.js"></script>
+    <script>
+        // Animations Init
+        AOS.init({
+            duration: 1000,
+            offset: 100,
+            once: true
+        });
+
+        // Video Lightbox
+        const lightbox = GLightbox({
+            touchNavigation: true,
+            loop: true,
+            autoplayVideos: true
+        });
+    </script>
+</body>
+</html>
