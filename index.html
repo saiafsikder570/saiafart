@@ -3,361 +3,345 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Omar Saif - Creative Designer & Editor</title>
+    <title>Omar Saif | Visual Artist</title>
     
-    <!-- ফন্টস (ডেমো থিমের মতো Syne এবং Manrope) -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;600&family=Syne:wght@400;700;800&display=swap" rel="stylesheet">
-    
-    <!-- আইকন ও এনিমেশন লাইব্রেরি -->
+    <!-- Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <!-- Video Popup -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glightbox/dist/css/glightbox.min.css" />
 
     <style>
-        /* --- PREMIUM THEME SETTINGS --- */
         :root {
-            --bg-color: #0b0b0b;
-            --card-bg: #161616;
-            --text-main: #ffffff;
-            --text-gray: #a1a1a1;
-            --accent: #ccff00; /* সেই লাইম গ্রিন কালার */
-            --border: #2a2a2a;
+            --bg: #0e0e0e;
+            --surface: #1a1a1a;
+            --text: #ffffff;
+            --accent: #d1f067; /* Artistics Theme Lime Green */
+            --gray: #888888;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        
+        * { margin: 0; padding: 0; box-sizing: border-box; cursor: none; /* Custom Cursor enabled */ }
+
         body {
-            background-color: var(--bg-color);
-            color: var(--text-main);
+            background-color: var(--bg);
+            color: var(--text);
             font-family: 'Manrope', sans-serif;
             overflow-x: hidden;
-            scroll-behavior: smooth;
         }
 
-        h1, h2, h3, h4 { font-family: 'Syne', sans-serif; font-weight: 700; text-transform: uppercase; }
+        /* --- CUSTOM CURSOR --- */
+        .cursor-dot, .cursor-outline {
+            position: fixed; top: 0; left: 0;
+            transform: translate(-50%, -50%);
+            border-radius: 50%; z-index: 9999;
+            pointer-events: none;
+        }
+        .cursor-dot { width: 8px; height: 8px; background-color: var(--accent); }
+        .cursor-outline {
+            width: 40px; height: 40px;
+            border: 1px solid rgba(209, 240, 103, 0.5);
+            transition: width 0.2s, height 0.2s, background-color 0.2s;
+        }
+        body:hover .cursor-outline { opacity: 1; }
         
-        /* --- CUSTOM SCROLLBAR --- */
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: var(--bg-color); }
-        ::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 10px; }
+        /* Hover States for Cursor */
+        a:hover ~ .cursor-outline, .hover-trigger:hover ~ .cursor-outline {
+            width: 60px; height: 60px; background-color: rgba(209, 240, 103, 0.1); border-color: transparent;
+        }
 
-        /* --- HEADER & NAV --- */
+        /* --- TYPOGRAPHY --- */
+        h1, h2, h3 { font-family: 'Syne', sans-serif; font-weight: 800; text-transform: uppercase; line-height: 1.1; }
+        .reveal-text { overflow: hidden; display: block; }
+        .reveal-text span { display: block; transform: translateY(100%); transition: transform 1s cubic-bezier(0.19, 1, 0.22, 1); }
+        
+        /* --- HEADER --- */
         header {
-            position: fixed; top: 0; left: 0; width: 100%;
-            padding: 20px 5%;
-            display: flex; justify-content: space-between; align-items: center;
-            z-index: 1000;
-            background: rgba(11, 11, 11, 0.85);
-            backdrop-filter: blur(15px);
-            border-bottom: 1px solid var(--border);
+            padding: 30px 5%; display: flex; justify-content: space-between; align-items: center;
+            position: fixed; width: 100%; top: 0; z-index: 100; mix-blend-mode: difference;
         }
-        .logo { font-size: 28px; font-weight: 800; color: var(--text-main); letter-spacing: -1px; }
-        .logo span { color: var(--accent); }
+        .logo { font-size: 24px; color: var(--accent); font-weight: 800; }
         
-        .nav-links a { margin-left: 30px; font-size: 14px; color: var(--text-main); text-decoration: none; font-weight: 600; text-transform: uppercase; transition: 0.3s; }
-        .nav-links a:hover { color: var(--accent); }
-        .hire-btn { background: var(--accent); color: #000; padding: 12px 30px; border-radius: 50px; font-weight: 700; text-decoration: none; display: inline-block; transition: 0.3s; }
-        .hire-btn:hover { background: #fff; transform: translateY(-3px); }
-
         /* --- HERO SECTION --- */
         .hero {
-            min-height: 100vh;
-            display: flex; align-items: center;
-            padding: 100px 5% 50px;
-            position: relative;
+            height: 100vh; display: flex; align-items: center; padding: 0 5%;
+            position: relative; padding-top: 80px;
         }
-        .hero-content { flex: 1; z-index: 2; }
-        .hero-content h5 { color: var(--accent); letter-spacing: 2px; margin-bottom: 20px; font-weight: 600; }
-        .hero-content h1 {
-            font-size: clamp(40px, 6vw, 90px);
-            line-height: 1.1; margin-bottom: 30px;
+        .hero-grid {
+            display: grid; grid-template-columns: 1.5fr 1fr; gap: 50px; align-items: center; width: 100%;
         }
-        .hero-content p { color: var(--text-gray); font-size: 18px; max-width: 500px; margin-bottom: 40px; line-height: 1.6; }
+        .hero-text h1 { font-size: clamp(50px, 7vw, 110px); color: var(--text); margin-bottom: 30px; }
+        .hero-text h1 .accent { color: var(--accent); }
+        .hero-text p { color: var(--gray); font-size: 18px; max-width: 500px; margin-bottom: 40px; }
         
-        .hero-img { flex: 1; text-align: right; position: relative; }
-        .hero-img img {
-            width: 80%; border-radius: 20px;
-            box-shadow: 0 0 50px rgba(204, 255, 0, 0.1);
-            filter: grayscale(100%); transition: 0.5s;
+        .btn-main {
+            padding: 15px 40px; border-radius: 50px; background: var(--accent); color: #000;
+            font-weight: 700; text-decoration: none; display: inline-block; transition: 0.3s;
+            text-transform: uppercase; font-size: 14px; letter-spacing: 1px;
         }
-        .hero-img img:hover { filter: grayscale(0%); }
+        .btn-main:hover { transform: scale(1.05); box-shadow: 0 0 20px rgba(209, 240, 103, 0.4); }
 
-        /* --- MARQUEE (SCROLLING TEXT) --- */
-        .marquee-container {
-            background: var(--accent);
-            padding: 20px 0;
-            overflow: hidden;
-            white-space: nowrap;
-            transform: rotate(-2deg) scale(1.05);
-            margin: 50px 0;
-        }
-        .marquee-content { display: inline-block; animation: scroll 20s linear infinite; }
-        .marquee-content span {
-            font-family: 'Syne', sans-serif; font-size: 40px; font-weight: 800; color: #000;
-            text-transform: uppercase; margin: 0 40px;
-        }
-        @keyframes scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+        .hero-img { position: relative; overflow: hidden; border-radius: 20px; transform: rotate(3deg); transition: 0.5s; }
+        .hero-img:hover { transform: rotate(0deg) scale(1.02); }
+        .hero-img img { width: 100%; display: block; filter: grayscale(100%); transition: 0.5s; }
+        .hero-img:hover img { filter: grayscale(0%); }
 
-        /* --- PORTFOLIO SECTIONS --- */
-        .section { padding: 80px 5%; }
-        .sec-header { margin-bottom: 60px; display: flex; justify-content: space-between; align-items: end; border-bottom: 1px solid var(--border); padding-bottom: 20px; }
-        .sec-title h2 { font-size: 50px; margin-bottom: 10px; }
-        .sec-title span { color: var(--accent); font-size: 16px; letter-spacing: 2px; }
+        /* --- MARQUEE STRIP --- */
+        .marquee {
+            background: var(--accent); padding: 25px 0; overflow: hidden; white-space: nowrap;
+            transform: rotate(-2deg) scale(1.05); margin: 80px 0; border-top: 2px solid #000; border-bottom: 2px solid #000;
+        }
+        .track { display: inline-block; animation: scroll 15s linear infinite; }
+        .track h2 { display: inline-block; color: #000; font-size: 50px; margin: 0 40px; -webkit-text-stroke: 1px #000; }
+        @keyframes scroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 
-        /* GRID LAYOUT */
-        .grid-gallery {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 30px;
-        }
-        .item-card {
-            background: var(--card-bg);
-            border-radius: 15px; overflow: hidden;
-            transition: 0.4s; border: 1px solid #222;
-        }
-        .item-card:hover { transform: translateY(-10px); border-color: var(--accent); }
+        /* --- PORTFOLIO GRID --- */
+        .section { padding: 100px 5%; }
+        .section-header { margin-bottom: 60px; border-bottom: 1px solid #333; padding-bottom: 20px; display: flex; justify-content: space-between; align-items: flex-end; }
+        .section-header h2 { font-size: 40px; }
         
-        .card-thumb { height: 280px; overflow: hidden; position: relative; }
-        .card-thumb img { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; }
-        .item-card:hover .card-thumb img { transform: scale(1.1); }
-        
-        .play-overlay {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.4); display: flex; align-items: center; justify-content: center;
-            opacity: 0; transition: 0.3s;
+        .work-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 40px;
         }
-        .item-card:hover .play-overlay { opacity: 1; }
+        .work-item { group: relative; cursor: pointer; }
+        .work-thumb {
+            height: 400px; overflow: hidden; border-radius: 10px; position: relative; margin-bottom: 20px;
+        }
+        .work-thumb img {
+            width: 100%; height: 100%; object-fit: cover; transition: transform 0.8s cubic-bezier(0.19, 1, 0.22, 1);
+        }
+        .work-item:hover .work-thumb img { transform: scale(1.1); }
+        
+        /* Video specific styles */
         .play-btn {
-            width: 60px; height: 60px; background: var(--accent); border-radius: 50%;
-            display: flex; align-items: center; justify-content: center; color: #000; font-size: 20px;
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0);
+            width: 80px; height: 80px; background: rgba(255,255,255,0.2); backdrop-filter: blur(5px);
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            transition: 0.3s; color: #fff; font-size: 24px; pointer-events: none;
         }
+        .work-item:hover .play-btn { transform: translate(-50%, -50%) scale(1); }
 
-        .card-info { padding: 25px; }
-        .card-info h3 { font-size: 24px; margin-bottom: 10px; }
-        .card-info p { color: var(--text-gray); font-size: 14px; }
+        .work-info h3 { font-size: 24px; margin-bottom: 5px; color: var(--text); }
+        .work-info span { color: var(--gray); font-size: 14px; text-transform: uppercase; letter-spacing: 1px; }
 
-        /* --- CONTACT & FOOTER --- */
-        .contact-sec { background: var(--card-bg); padding: 80px 5%; margin-top: 50px; border-top: 1px solid var(--border); }
-        .contact-grid { display: grid; grid-template-columns: 1fr 1.5fr; gap: 50px; }
-        
-        .contact-info-box h4 { color: var(--accent); margin-bottom: 20px; }
-        .info-item { margin-bottom: 30px; }
-        .info-item i { color: var(--accent); margin-right: 10px; }
-        .info-item span { font-size: 20px; font-weight: 600; display: block; margin-top: 5px; }
-
-        form input, form textarea {
-            width: 100%; background: #0b0b0b; border: 1px solid var(--border);
-            padding: 15px; color: #fff; margin-bottom: 20px; border-radius: 5px; font-family: 'Manrope';
+        /* --- CONTACT --- */
+        footer {
+            padding: 100px 5%; border-top: 1px solid #333; text-align: center;
         }
-        form input:focus, form textarea:focus { outline: none; border-color: var(--accent); }
-        
-        footer { padding: 40px 5%; text-align: center; border-top: 1px solid var(--border); font-size: 14px; color: var(--text-gray); }
+        .big-contact {
+            font-size: clamp(30px, 6vw, 80px); font-family: 'Syne'; font-weight: 800;
+            color: transparent; -webkit-text-stroke: 1px var(--gray); transition: 0.3s;
+            display: block; margin-bottom: 30px; text-decoration: none;
+        }
+        .big-contact:hover { color: var(--accent); -webkit-text-stroke: 1px var(--accent); }
 
-        /* Mobile Responsive */
+        /* Responsive */
         @media (max-width: 768px) {
-            .hero { flex-direction: column-reverse; padding-top: 120px; text-align: center; }
-            .hero-img { margin-bottom: 40px; }
-            .hero-content h1 { font-size: 45px; }
-            .contact-grid { grid-template-columns: 1fr; }
-            .sec-header { flex-direction: column; align-items: flex-start; }
-            .nav-links { display: none; } /* মোবাইলে মেনু সিম্পল রাখার জন্য */
+            .hero-grid { grid-template-columns: 1fr; }
+            .hero-img { height: 300px; width: 100%; object-fit: cover; margin-top: 30px; }
+            .cursor-dot, .cursor-outline { display: none; } /* Hide custom cursor on mobile */
+            * { cursor: auto; }
         }
     </style>
 </head>
 <body>
 
-    <!-- Header -->
+    <!-- Custom Cursor -->
+    <div class="cursor-dot"></div>
+    <div class="cursor-outline"></div>
+
     <header>
-        <div class="logo">OMAR<span>.</span></div>
-        <nav class="nav-links">
-            <a href="#home">Home</a>
-            <a href="#graphic">Graphic Design</a>
-            <a href="#video">Video Editing</a>
-            <a href="#contact">Contact</a>
-        </nav>
-        <a href="tel:+8801XXXXXXXXX" class="hire-btn">Let's Talk</a>
+        <div class="logo">OMAR.</div>
+        <a href="mailto:info@omarsaif.com" class="btn-main" style="padding: 10px 25px; font-size: 12px;">Get In Touch</a>
     </header>
 
-    <!-- Hero Section -->
-    <section class="hero" id="home">
-        <div class="hero-content" data-aos="fade-right">
-            <h5>HELLO, I AM OMAR SAIF</h5>
-            <h1>BRINGING YOUR<br>IDEAS TO <span>LIFE</span></h1>
-            <p>Professional Graphic Designer & Video Editor based in Dhaka, Bangladesh. I transform concepts into stunning visuals.</p>
-            <div class="hero-btns">
-                <a href="#graphic" class="hire-btn">View My Work</a>
+    <!-- HERO -->
+    <section class="hero">
+        <div class="hero-grid">
+            <div class="hero-text">
+                <h1>
+                    <span class="reveal-text"><span>BRINGING</span></span>
+                    <span class="reveal-text"><span>IDEAS TO <span class="accent">LIFE</span></span></span>
+                    <span class="reveal-text"><span>CREATIVELY</span></span>
+                </h1>
+                <p>Hello, I'm Omar Saif. A dedicated Graphic Designer & Video Editor from Dhaka. I craft visuals that tell your story.</p>
+                <a href="#work" class="btn-main hover-trigger">Explore Portfolio</a>
             </div>
-        </div>
-        <div class="hero-img" data-aos="fade-left">
-            <!-- তোমার নিজের ছবি এখানে দেবে -->
-            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=800&auto=format&fit=crop" alt="Omar Saif">
+            <div class="hero-img">
+                <!-- তোমার ছবি -->
+                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=800&auto=format&fit=crop" alt="Omar">
+            </div>
         </div>
     </section>
 
-    <!-- Scrolling Marquee (Demo-র মত) -->
-    <div class="marquee-container">
-        <div class="marquee-content">
-            <span>Graphic Design * Video Editing * Brand Identity * Motion Graphics * UI/UX Design * Graphic Design * Video Editing *</span>
+    <!-- MARQUEE -->
+    <div class="marquee">
+        <div class="track">
+            <h2>GRAPHIC DESIGN * VIDEO EDITING * BRAND IDENTITY * MOTION GRAPHICS * VISUAL ART * GRAPHIC DESIGN * VIDEO EDITING *</h2>
         </div>
     </div>
 
-    <!-- Graphic Design Portfolio -->
-    <section class="section" id="graphic">
-        <div class="sec-header" data-aos="fade-up">
-            <div class="sec-title">
-                <span>PORTFOLIO</span>
-                <h2>Selected <span>Designs</span></h2>
+    <!-- GRAPHIC DESIGN -->
+    <section id="work" class="section">
+        <div class="section-header">
+            <div>
+                <span style="color:var(--accent); letter-spacing:2px;">PORTFOLIO</span>
+                <h2>Graphic <span style="color:var(--gray);">Works</span></h2>
             </div>
-            <p style="color:var(--text-gray);">All Graphic Works</p>
         </div>
-
-        <div class="grid-gallery">
-            <!-- Design Item 1 -->
-            <div class="item-card" data-aos="fade-up">
-                <div class="card-thumb">
-                    <!-- ইমেজ লিংক চেঞ্জ করবে -->
-                    <img src="https://images.unsplash.com/photo-1626785774573-4b799312c95d?q=80&w=600" alt="Design">
+        
+        <div class="work-grid">
+            <!-- Item 1 -->
+            <div class="work-item hover-trigger">
+                <div class="work-thumb">
+                    <!-- Image Link -->
+                    <img src="https://images.unsplash.com/photo-1626785774573-4b799312c95d?q=80&w=600" alt="Work 1">
                 </div>
-                <div class="card-info">
-                    <h3>Social Media Kit</h3>
-                    <p>Branding / Social Media</p>
-                </div>
-            </div>
-
-            <!-- Design Item 2 -->
-            <div class="item-card" data-aos="fade-up" data-aos-delay="100">
-                <div class="card-thumb">
-                    <img src="https://images.unsplash.com/photo-1561070791-2526d30994b5?q=80&w=600" alt="Design">
-                </div>
-                <div class="card-info">
-                    <h3>Premium Logo Design</h3>
-                    <p>Identity / Vector</p>
+                <div class="work-info">
+                    <h3>Social Media Branding</h3>
+                    <span>Photoshop / Illustrator</span>
                 </div>
             </div>
 
-            <!-- Design Item 3 -->
-            <div class="item-card" data-aos="fade-up" data-aos-delay="200">
-                <div class="card-thumb">
-                    <img src="https://images.unsplash.com/photo-1600607686527-6fb886090705?q=80&w=600" alt="Design">
+            <!-- Item 2 -->
+            <div class="work-item hover-trigger">
+                <div class="work-thumb">
+                    <img src="https://images.unsplash.com/photo-1600607686527-6fb886090705?q=80&w=600" alt="Work 2">
                 </div>
-                <div class="card-info">
+                <div class="work-info">
                     <h3>Product Packaging</h3>
-                    <p>Print Design</p>
+                    <span>Print Design</span>
+                </div>
+            </div>
+             <!-- Item 3 -->
+             <div class="work-item hover-trigger">
+                <div class="work-thumb">
+                    <img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?q=80&w=600" alt="Work 3">
+                </div>
+                <div class="work-info">
+                    <h3>Corporate Identity</h3>
+                    <span>Branding</span>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Video Editing Portfolio -->
-    <section class="section" id="video">
-        <div class="sec-header" data-aos="fade-up">
-            <div class="sec-title">
-                <span>SHOWREEL</span>
-                <h2>Video <span>Projects</span></h2>
+    <!-- VIDEO EDITING -->
+    <section class="section">
+        <div class="section-header">
+            <div>
+                <span style="color:var(--accent); letter-spacing:2px;">SHOWREEL</span>
+                <h2>Video <span style="color:var(--gray);">Projects</span></h2>
             </div>
-            <p style="color:var(--text-gray);">Motion & Editing</p>
         </div>
 
-        <div class="grid-gallery">
+        <div class="work-grid">
             <!-- Video 1 -->
-            <a href="https://www.youtube.com/watch?v=Ga6RYejo6Hk" class="glightbox item-card" data-aos="zoom-in">
-                <div class="card-thumb">
-                    <!-- ভিডিও থাম্বনেইল -->
-                    <img src="https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?q=80&w=600" alt="Video">
-                    <div class="play-overlay"><div class="play-btn"><i class="fa-solid fa-play"></i></div></div>
+            <a href="https://www.youtube.com/watch?v=Ga6RYejo6Hk" class="glightbox work-item hover-trigger">
+                <div class="work-thumb">
+                    <img src="https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?q=80&w=600" alt="Video 1">
+                    <div class="play-btn"><i class="fa-solid fa-play"></i></div>
                 </div>
-                <div class="card-info">
+                <div class="work-info">
                     <h3>Cinematic Travel Vlog</h3>
-                    <p>Color Grading / Editing</p>
+                    <span>Premiere Pro</span>
                 </div>
             </a>
 
             <!-- Video 2 -->
-            <a href="https://www.youtube.com/watch?v=LXb3EKWsInQ" class="glightbox item-card" data-aos="zoom-in" data-aos-delay="100">
-                <div class="card-thumb">
-                    <img src="https://images.unsplash.com/photo-1518135714426-c18f5ffb6f4d?q=80&w=600" alt="Video">
-                    <div class="play-overlay"><div class="play-btn"><i class="fa-solid fa-play"></i></div></div>
+            <a href="https://www.youtube.com/watch?v=LXb3EKWsInQ" class="glightbox work-item hover-trigger">
+                <div class="work-thumb">
+                    <img src="https://images.unsplash.com/photo-1536240478700-b869070f9279?q=80&w=600" alt="Video 2">
+                    <div class="play-btn"><i class="fa-solid fa-play"></i></div>
                 </div>
-                <div class="card-info">
-                    <h3>Commercial Ad</h3>
-                    <p>Motion Graphics</p>
-                </div>
-            </a>
-
-            <!-- Video 3 -->
-            <a href="https://www.youtube.com/watch?v=ScMzIvxBSi4" class="glightbox item-card" data-aos="zoom-in" data-aos-delay="200">
-                <div class="card-thumb">
-                    <img src="https://images.unsplash.com/photo-1574717432707-c67805686729?q=80&w=600" alt="Video">
-                    <div class="play-overlay"><div class="play-btn"><i class="fa-solid fa-play"></i></div></div>
-                </div>
-                <div class="card-info">
-                    <h3>Corporate Interview</h3>
-                    <p>Post Production</p>
+                <div class="work-info">
+                    <h3>Commercial Advertisement</h3>
+                    <span>After Effects</span>
                 </div>
             </a>
         </div>
     </section>
 
-    <!-- Contact Section -->
-    <section class="contact-sec" id="contact">
-        <div class="contact-grid">
-            <div class="contact-info-box" data-aos="fade-right">
-                <h2>LET'S WORK <br><span>TOGETHER</span></h2>
-                <p style="color:var(--text-gray); margin: 20px 0;">Have a project in mind? Let's discuss how I can help your brand grow.</p>
-                
-                <div class="info-item">
-                    <p>Location</p>
-                    <span>Rayerbag, Dhaka, Bangladesh</span>
-                </div>
-                <div class="info-item">
-                    <p>Phone</p>
-                    <span>+880 1XXX-XXXXXX</span>
-                </div>
-                <div class="info-item">
-                    <p>Email</p>
-                    <span>omar.saif@example.com</span>
-                </div>
-            </div>
-
-            <div class="contact-form" data-aos="fade-left">
-                <form action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
-                    <input type="text" name="name" placeholder="Your Name" required>
-                    <input type="email" name="email" placeholder="Your Email" required>
-                    <textarea name="message" rows="5" placeholder="Tell me about your project..."></textarea>
-                    <button type="submit" class="hire-btn" style="border:none; cursor:pointer; width:100%;">Send Message</button>
-                </form>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
+    <!-- FOOTER -->
     <footer>
-        <div class="social-links" style="margin-bottom: 20px;">
-            <a href="#" style="color:#fff; margin:0 15px; font-size:20px;"><i class="fa-brands fa-facebook"></i></a>
-            <a href="#" style="color:#fff; margin:0 15px; font-size:20px;"><i class="fa-brands fa-linkedin"></i></a>
-            <a href="#" style="color:#fff; margin:0 15px; font-size:20px;"><i class="fa-brands fa-behance"></i></a>
-            <a href="#" style="color:#fff; margin:0 15px; font-size:20px;"><i class="fa-brands fa-instagram"></i></a>
+        <p style="color: var(--gray); margin-bottom: 20px;">READY TO START A PROJECT?</p>
+        <a href="mailto:your@email.com" class="big-contact hover-trigger">LET'S TALK</a>
+        
+        <div style="margin-top: 50px; display: flex; justify-content: center; gap: 30px; font-size: 20px;">
+            <a href="#" style="color: white;"><i class="fa-brands fa-facebook"></i></a>
+            <a href="#" style="color: white;"><i class="fa-brands fa-instagram"></i></a>
+            <a href="#" style="color: white;"><i class="fa-brands fa-linkedin"></i></a>
         </div>
-        <p>&copy; 2025 Omar Saif. All Rights Reserved.</p>
+        <p style="margin-top: 50px; color: #444; font-size: 12px;">© 2025 Omar Saif. Dhaka, Bangladesh.</p>
     </footer>
 
-    <!-- Scripts -->
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <!-- GSAP & Scripts (The Magic) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/mcstudios/glightbox/dist/js/glightbox.min.js"></script>
+    
     <script>
-        // Animations Init
-        AOS.init({
-            duration: 1000,
-            offset: 100,
-            once: true
+        // 1. Text Reveal Animation (Like the Demo)
+        gsap.registerPlugin(ScrollTrigger);
+        
+        // Hero Text Reveal
+        gsap.to(".reveal-text span", {
+            y: 0,
+            duration: 1.5,
+            ease: "power4.out",
+            stagger: 0.2,
+            delay: 0.2
         });
 
-        // Video Lightbox
+        // Hero Image Animation
+        gsap.from(".hero-img", {
+            scale: 0.8,
+            opacity: 0,
+            duration: 1.5,
+            ease: "power2.out",
+            delay: 0.5
+        });
+
+        // 2. Custom Cursor Logic
+        const cursorDot = document.querySelector(".cursor-dot");
+        const cursorOutline = document.querySelector(".cursor-outline");
+
+        window.addEventListener("mousemove", function(e) {
+            const posX = e.clientX;
+            const posY = e.clientY;
+
+            // Simple movement for dot
+            cursorDot.style.left = `${posX}px`;
+            cursorDot.style.top = `${posY}px`;
+
+            // Smooth lag movement for outline
+            cursorOutline.animate({
+                left: `${posX}px`,
+                top: `${posY}px`
+            }, { duration: 500, fill: "forwards" });
+        });
+
+        // 3. Video Lightbox
         const lightbox = GLightbox({
             touchNavigation: true,
             loop: true,
             autoplayVideos: true
         });
+
+        // 4. Fade Up elements on scroll
+        gsap.utils.toArray('.work-item').forEach(item => {
+            gsap.from(item, {
+                scrollTrigger: {
+                    trigger: item,
+                    start: "top 85%",
+                },
+                y: 50,
+                opacity: 0,
+                duration: 1,
+                ease: "power2.out"
+            });
+        });
+
     </script>
 </body>
 </html>
